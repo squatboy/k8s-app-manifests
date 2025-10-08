@@ -17,6 +17,9 @@ service:
   type: NodePort
   port: 80
 
+ingress:
+  enabled: false
+
 resources: {}
 
 livenessProbe:
