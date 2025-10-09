@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts # 외부 Helm 리포지토리 주소
+    chart: kube-prometheus-stack
+    targetRevision: 58.0.0 
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring # 이 앱을 배포할 위치
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  # 네임스페이스가 없으면 자동 생성
+  syncOptions:
+    - CreateNamespace=true
+  helm:
+    parameters:
+    - name: "grafana.persistence.enabled"
+      value: "true"
+    - name: "grafana.securityContext.fsGroup"
+      value: "472"
+    - name: "grafana.securityContext.runAsUser"
+      value: "472"

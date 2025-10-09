@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-nodejs-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/squatboy/k8s-nodejs-app-manifests.git # Manifest 리포지토리 주소
+    targetRevision: HEAD
+    path: k8s-nodejs-app # 우리 앱의 Helm 차트 경로
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default # 이 앱을 배포할 위치
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
