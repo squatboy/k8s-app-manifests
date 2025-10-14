@@ -18,7 +18,15 @@ service:
   port: 80
 
 ingress:
-  enabled: false
+  enabled: true 
+  className: ""
+  annotations: {}
+  hosts:
+    - host: my-k8s-app.com
+      paths:
+        - path: /api 
+          pathType: Prefix 
+  tls: []
 
 resources: {}
 
