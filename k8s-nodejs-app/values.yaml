@@ -4,7 +4,7 @@ replicaCount: 2
 image:
   repository: leejay5914/k8s-nodejs-app
   pullPolicy: IfNotPresent
-  tag: "06171f9cb33b403b2d2a906ac990a4adcbd7a80e"
+  tag: "5ae1b59ac61921a478b0035ddd991382526f4413"
 
 imagePullSecrets: []
 nameOverride: ""
