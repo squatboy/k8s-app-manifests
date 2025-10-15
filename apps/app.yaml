@@ -3,6 +3,10 @@ kind: Application
 metadata:
   name: k8s-nodejs-app
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: my-image=leejay5914/k8s-nodejs-app
+    argocd-image-updater.argoproj.io/my-image.update-strategy: latest
+    argocd-image-updater.argoproj.io/my-image.helm.image-spec: image.tag
 spec:
   project: default
   source:
