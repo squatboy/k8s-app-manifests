@@ -11,6 +11,9 @@ spec:
     targetRevision: 6.5.1
     helm:
       values: |
+        # 배포 모드
+        deploymentMode: SingleBinary
+        
         # 단일 바이너리 모드 활성화
         singleBinary:
           replicas: 1
