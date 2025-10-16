@@ -25,6 +25,12 @@ spec:
           replicas: 0
         write:
           replicas: 0
+        
+        # 캐시 비활성화
+        chunksCache:
+          enabled: false
+        resultsCache:
+          enabled: false
 
         loki:
           storage:
