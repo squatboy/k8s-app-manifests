@@ -11,6 +11,18 @@ spec:
     targetRevision: 6.5.1
     helm:
       values: |
+        # 단일 바이너리 모드 활성화
+        singleBinary:
+          replicas: 1
+        
+        # 분산 모드 컴포넌트 비활성화 
+        backend:
+          replicas: 0
+        read:
+          replicas: 0
+        write:
+          replicas: 0
+
         loki:
           storage:
             type: 'filesystem'
