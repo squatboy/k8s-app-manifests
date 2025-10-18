@@ -1,7 +1,7 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
-  name: {{ .Release.Name }}-deployment
+  name: {{ .Release.Name }}-rollout
   labels:
     app: {{ .Release.Name }}
 spec:
@@ -23,6 +23,14 @@ spec:
               containerPort: 3000
               protocol: TCP
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
+            {{- toYaml .Values.livenessProbe | nindent 14 }}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            {{- toYaml .Values.readinessProbe | nindent 14 }}
+  strategy:
+    canary:
+      canaryService: {{ .Release.Name }}-canary-service
+      stableService: {{ .Release.Name }}-stable-service
+      steps:
+      - setWeight: 20
+      - pause: {}
+      - setWeight: 100
