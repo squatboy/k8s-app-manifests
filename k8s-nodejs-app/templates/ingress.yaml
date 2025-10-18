@@ -16,7 +16,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ $.Release.Name }}-service
+                name: {{ $.Release.Name }}-stable-service
                 port:
                   name: http
           {{- end }}
