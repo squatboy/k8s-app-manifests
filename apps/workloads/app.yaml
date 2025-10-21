@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/squatboy/k8s-nodejs-app-manifests.git
     targetRevision: HEAD
-    path: charts/k8s-nodejs-app # Helm 차트 경로
+    path: .
     plugin:
       name: sops
       env:
