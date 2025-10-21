@@ -14,8 +14,7 @@ spec:
     targetRevision: HEAD
     path: apps
     directory:
-      recurse: true
-      exclude: '*/secrets/*' 
+      recurse: true 
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd # 루트 앱 자체는 argocd 네임스페이스에

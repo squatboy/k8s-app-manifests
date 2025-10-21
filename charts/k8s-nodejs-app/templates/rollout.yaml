@@ -6,6 +6,8 @@ metadata:
     app: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 600
   selector:
     matchLabels:
       app: {{ .Release.Name }}
