@@ -13,6 +13,22 @@ fullnameOverride: ""
 podAnnotations: {}
 podLabels: {}
 
+# Pod 보안 컨텍스트
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
+
+# 컨테이너 보안 컨텍스트
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false  # Node.js - /tmp 쓰기 필요할 수 있음
+  capabilities:
+    drop:
+      - ALL
+
 service:
   type: ClusterIP
   port: 80
@@ -28,16 +44,42 @@ ingress:
           pathType: Prefix 
   tls: []
 
-resources: {}
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
 livenessProbe:
   httpGet:
-    path: /
+    path: /health
     port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
 readinessProbe:
   httpGet:
-    path: /
+    path: /ready # 별도의 readiness 체크
     port: http
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  successThreshold: 1
+  failureThreshold: 3
+
+startupProbe:      
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30  # 최대 5분 대기
 
 nodeSelector: {}
 tolerations: []
