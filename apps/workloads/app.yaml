@@ -4,6 +4,9 @@ metadata:
   name: k8s-nodejs-app
   namespace: argocd
   annotations:
+    # --- Sync Wave ---
+    argocd.argoproj.io/sync-wave: "2"
+    # --- Image Updater ---
     argocd-image-updater.argoproj.io/image-list: my-image=leejay5914/k8s-nodejs-app
     argocd-image-updater.argoproj.io/my-image.update-strategy: latest
     argocd-image-updater.argoproj.io/my-image.helm.image-name: image.repository
@@ -11,12 +14,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/squatboy/k8s-nodejs-app-manifests.git # Manifest 리포지토리 주소
+    repoURL: https://github.com/squatboy/k8s-nodejs-app-manifests.git
     targetRevision: HEAD
-    path: k8s-nodejs-app # 우리 앱의 Helm 차트 경로
+    path: charts/k8s-nodejs-app # Helm 차트 경로
   destination:
     server: https://kubernetes.default.svc
-    namespace: default # 이 앱을 배포할 위치
+    namespace: default 
   syncPolicy:
     automated:
       prune: true

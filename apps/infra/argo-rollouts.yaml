@@ -1,9 +1,12 @@
-# apps/argo-rollouts.yaml
+# apps/infra/argo-rollouts.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argo-rollouts
   namespace: argocd
+  # --- ⬇️ Sync Wave 어노테이션 추가 ⬇️ ---
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
