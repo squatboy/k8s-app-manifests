@@ -17,6 +17,13 @@ spec:
     repoURL: https://github.com/squatboy/k8s-nodejs-app-manifests.git
     targetRevision: HEAD
     path: charts/k8s-nodejs-app # Helm 차트 경로
+    plugin:
+      name: sops
+      env:
+        - name: HELM_ENABLED
+          value: "true"
+        - name: HELM_CHART_PATH
+          value: "charts/k8s-nodejs-app"
   destination:
     server: https://kubernetes.default.svc
     namespace: default 
