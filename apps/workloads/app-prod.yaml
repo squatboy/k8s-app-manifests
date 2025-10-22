@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-nodejs-app-prod
+  namespace: argocd
+  annotations:
+    # Namespace 생성 후 배포
+    argocd.argoproj.io/sync-wave: "2"
+    # Image Updater - Production용 설정
+    argocd-image-updater.argoproj.io/image-list: prod-image=leejay5914/k8s-nodejs-app
+    argocd-image-updater.argoproj.io/prod-image.update-strategy: latest
+    argocd-image-updater.argoproj.io/prod-image.helm.image-name: image.repository
+    argocd-image-updater.argoproj.io/prod-image.helm.image-tag: image.tag
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/squatboy/k8s-app-manifests.git
+    targetRevision: HEAD
+    path: charts/k8s-nodejs-app
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-prod.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
