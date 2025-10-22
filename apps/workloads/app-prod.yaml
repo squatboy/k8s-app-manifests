@@ -9,6 +9,7 @@ metadata:
     # Image Updater - Production용 설정
     argocd-image-updater.argoproj.io/image-list: prod-image=leejay5914/k8s-nodejs-app
     argocd-image-updater.argoproj.io/prod-image.update-strategy: latest
+    argocd-image-updater.argoproj.io/prod-image.allow-tags: regexp:^prod-.*
     argocd-image-updater.argoproj.io/prod-image.helm.image-name: image.repository
     argocd-image-updater.argoproj.io/prod-image.helm.image-tag: image.tag
 spec:
