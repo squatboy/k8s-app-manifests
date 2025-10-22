@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: {{ .Release.Name }}-analysis
+spec:
+  timeout: {{ .Values.analysis.timeout }}
+  metrics:
+  - name: success-rate
+    interval: {{ .Values.analysis.interval }}
+    successCondition: result[0] <= {{ .Values.analysis.successRateThreshold }}
+    provider:
+      prometheus:
+        address: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        query: |
+          rate(http_requests_total{namespace="{{ .Release.Namespace }}", app="{{ .Release.Name }}", status=~"5.."}[{{ .Values.analysis.interval }}]) / rate(http_requests_total{namespace="{{ .Release.Namespace }}", app="{{ .Release.Name }}"}[{{ .Values.analysis.interval }}])
+  args:
+  - name: service-name
+    value: {{ .Release.Name }}-canary-service
+  dryRun:
+    metricName: success-rate
+  measurementRetention:
+  - metricName: success-rate
+    limit: 100

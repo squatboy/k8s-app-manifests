@@ -84,3 +84,9 @@ startupProbe:
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
+# Analysis 설정
+analysis:
+  successRateThreshold: 0.05  # 5xx 오류율 임계값 (5%)
+  interval: 5m
+  timeout: 10m

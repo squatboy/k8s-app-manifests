@@ -48,6 +48,14 @@ spec:
     canary:
       canaryService: {{ .Release.Name }}-canary-service
       stableService: {{ .Release.Name }}-stable-service
+      analysis:
+        templates:
+        - templateName: {{ .Release.Name }}-analysis
+        startingStep: 1
+        args:
+        - name: service-name
+          valueFrom:
+            podTemplateHashValue: Latest
       steps:
       - setWeight: 20
       - pause: {}
