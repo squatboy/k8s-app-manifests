@@ -9,6 +9,7 @@ metadata:
     # Image Updater - Staging용 설정
     argocd-image-updater.argoproj.io/image-list: staging-image=leejay5914/k8s-nodejs-app
     argocd-image-updater.argoproj.io/staging-image.update-strategy: latest
+    argocd-image-updater.argoproj.io/staging-image.allow-tags: regexp:^dev-.*
     argocd-image-updater.argoproj.io/staging-image.helm.image-name: image.repository
     argocd-image-updater.argoproj.io/staging-image.helm.image-tag: image.tag
 spec:
