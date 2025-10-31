@@ -1,0 +1,61 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dev-team-role
+  namespace: staging
+  labels:
+    team: dev
+    environment: staging
+rules:
+  # 배포 관련 리소스 (Argo Rollouts 포함)
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  
+  - apiGroups: ["argoproj.io"]
+    resources: ["rollouts"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  
+  # 서비스 및 네트워킹
+  - apiGroups: [""]
+    resources: ["services", "endpoints"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  
+  # ConfigMap (설정 파일)
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  
+  # Secret은 읽기 전용 (생성/수정/삭제 불가)
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  
+  # SealedSecret (읽기 전용)
+  - apiGroups: ["bitnami.com"]
+    resources: ["sealedsecrets"]
+    verbs: ["get", "list"]
+  
+  # Pod 조회 및 로그 확인
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "pods/status"]
+    verbs: ["get", "list", "watch"]
+  
+  # Pod 디버깅 (exec는 허용)
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
+  
+  # HPA (Horizontal Pod Autoscaler)
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  
+  # 이벤트 조회 (디버깅용)
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["get", "list", "watch"]

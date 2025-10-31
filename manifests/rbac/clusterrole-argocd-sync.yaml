@@ -1,0 +1,22 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argocd-sync-role
+  labels:
+    app: argocd
+rules:
+  # ArgoCD Application Sync 권한
+  - apiGroups: ["argoproj.io"]
+    resources: ["applications"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+  
+  # ArgoCD Application 상태 확인
+  - apiGroups: ["argoproj.io"]
+    resources: ["applications/status"]
+    verbs: ["get", "list", "watch"]
+  
+  # ArgoCD Application 동기화 작업
+  - apiGroups: ["argoproj.io"]
+    resources: ["applications"]
+    resourceNames: ["*"]
+    verbs: ["sync"]

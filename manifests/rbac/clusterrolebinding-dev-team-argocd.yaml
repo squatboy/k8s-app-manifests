@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dev-team-argocd-sync-binding
+  labels:
+    team: dev
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argocd-sync-role
+subjects:
+  # Staging 개발팀
+  - kind: ServiceAccount
+    name: dev-team
+    namespace: staging
+  # Production 개발팀 (읽기 전용이지만 Sync는 가능)
+  - kind: ServiceAccount
+    name: dev-team
+    namespace: production
