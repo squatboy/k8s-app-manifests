@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dev-team-readonly-role
+  namespace: production
+  labels:
+    team: dev
+    environment: production
+rules:
+  # 모든 리소스 읽기 전용
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+  
+  # Pod 로그 확인
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get", "list"]
+  
+  # Pod 상태 확인
+  - apiGroups: [""]
+    resources: ["pods/status"]
+    verbs: ["get", "list"]

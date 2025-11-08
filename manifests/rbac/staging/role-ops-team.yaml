@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ops-team-role
+  namespace: staging
+  labels:
+    team: ops
+    environment: staging
+rules:
+  # 전체 권한 (모든 리소스에 대한 CRUD)
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]

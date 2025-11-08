@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ops-team-role
+  namespace: production
+  labels:
+    team: ops
+    environment: production
+rules:
+  # 전체 권한
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]

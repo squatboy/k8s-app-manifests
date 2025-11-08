@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rbac-policies
+  namespace: argocd
+  labels:
+    category: security
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/squatboy/k8s-nodejs-app-manifests.git
+    targetRevision: main
+    path: manifests/rbac
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false  # 네임스페이스는 이미 존재
